@@ -275,7 +275,9 @@ const Select = React.createClass({
 
 		// prevent default event handlers
 		event.stopPropagation();
-		event.preventDefault();
+		if (!this.state.open) {
+			event.preventDefault();
+		}
 
 		// for the non-searchable select, toggle the menu
 		if (!this.props.searchable) {
