@@ -547,9 +547,9 @@ const Select = React.createClass({
 			});
 		} else {
 			this.setState({
-				isOpen: false,
+				isOpen: this.props.openOnFocus,
 				inputValue: '',
-				isPseudoFocused: this.state.isFocused,
+				isPseudoFocused: this.state.isFocused && !this.props.openOnFocus,
 			}, () => {
 				this.setValue(value);
 			});
