@@ -375,6 +375,7 @@ var Select = _react2['default'].createClass({
 		// {label} is replaced with the item label
 		className: _react2['default'].PropTypes.string, // className for the outer element
 		clearAllText: stringOrNode, // title for the "clear" control when multi: true
+		clearOnSelect: _react2['default'].PropTypes.bool,
 		clearValueText: stringOrNode, // title for the "clear" control
 		clearable: _react2['default'].PropTypes.bool, // should it be possible to reset value
 		delimiter: _react2['default'].PropTypes.string, // delimiter to use to join multiple values for the hidden field value
@@ -442,6 +443,7 @@ var Select = _react2['default'].createClass({
 			backspaceToRemoveMessage: 'Press backspace to remove {label}',
 			clearable: true,
 			clearAllText: 'Clear all',
+			clearOnSelect: true,
 			clearValueText: 'Clear value',
 			delimiter: ',',
 			disabled: false,
@@ -898,9 +900,10 @@ var Select = _react2['default'].createClass({
 
 		//NOTE: update value in the callback to make sure the input value is empty so that there are no sttyling issues (Chrome had issue otherwise)
 		this.hasScrolledToOption = false;
+		var inputValue = this.props.clearOnSelect ? '' : this.state.inputValue;
 		if (this.props.multi) {
 			this.setState({
-				inputValue: '',
+				inputValue: inputValue,
 				focusedIndex: null
 			}, function () {
 				_this3.addValue(value);
@@ -908,7 +911,7 @@ var Select = _react2['default'].createClass({
 		} else {
 			this.setState({
 				isOpen: this.props.openOnFocus,
-				inputValue: '',
+				inputValue: inputValue,
 				isPseudoFocused: this.state.isFocused && !this.props.openOnFocus
 			}, function () {
 				_this3.setValue(value);
