@@ -41,6 +41,7 @@ const Select = React.createClass({
 														   // {label} is replaced with the item label
 		className: React.PropTypes.string,          // className for the outer element
 		clearAllText: stringOrNode,                 // title for the "clear" control when multi: true
+		clearOnSelect: React.PropTypes.bool,
 		clearValueText: stringOrNode,               // title for the "clear" control
 		clearable: React.PropTypes.bool,            // should it be possible to reset value
 		delimiter: React.PropTypes.string,          // delimiter to use to join multiple values for the hidden field value
@@ -108,6 +109,7 @@ const Select = React.createClass({
 			backspaceToRemoveMessage: 'Press backspace to remove {label}',
 			clearable: true,
 			clearAllText: 'Clear all',
+			clearOnSelect: true,
 			clearValueText: 'Clear value',
 			delimiter: ',',
 			disabled: false,
@@ -538,9 +540,10 @@ const Select = React.createClass({
 	selectValue (value) {
 		//NOTE: update value in the callback to make sure the input value is empty so that there are no sttyling issues (Chrome had issue otherwise)
 		this.hasScrolledToOption = false;
+		const inputValue = this.props.clearOnSelect ? '' : this.state.inputValue;
 		if (this.props.multi) {
 			this.setState({
-				inputValue: '',
+				inputValue: inputValue,
 				focusedIndex: null
 			}, () => {
 				this.addValue(value);
@@ -548,7 +551,7 @@ const Select = React.createClass({
 		} else {
 			this.setState({
 				isOpen: this.props.openOnFocus,
-				inputValue: '',
+				inputValue: inputValue,
 				isPseudoFocused: this.state.isFocused && !this.props.openOnFocus,
 			}, () => {
 				this.setValue(value);
